@@ -143,7 +143,9 @@ def write_to_bin(out_file, lowerBound=0, upperBound=None, makevocab=False):
     # story_fnames = [name for name in os.listdir(tokenized_stories_dir) if os.path.isfile(tokenized_stories_dir+'\\'+name) ]
 
     upperBound = len(os.listdir(tokenized_stories_dir)) if upperBound == None else upperBound
-    sliced_dir = os.listdir(tokenized_stories_dir)[lowerBound:upperBound]
+    fnames = os.listdir(tokenized_stories_dir)
+    fnames.sort()
+    sliced_dir = fnames[lowerBound:upperBound]
     print("Writing bin for %d inputs" % len(sliced_dir))
 
     story_fnames = [name for name in sliced_dir]
