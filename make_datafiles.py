@@ -236,11 +236,15 @@ if __name__ == '__main__':
     tokenize_stories(stories_dir, tokenized_stories_dir)
 
     # Read the tokenized stories, do a little postprocessing then write to bin files
-    sepIdx = round(validation_rate * len(os.listdir(tokenized_stories_dir)))
-    write_to_bin(os.path.join(finished_files_dir, "val.bin"),
-                 lowerBound=0, upperBound=sepIdx)
+    upBound = len(os.listdir(tokenized_stories_dir))
+    sepIdx = round(validation_rate * upBound)
+    halfOfRest = round((upBound - sepIdx)/2)
     write_to_bin(os.path.join(finished_files_dir, "train.bin"),
-                 lowerBound=sepIdx, upperBound=len(os.listdir(tokenized_stories_dir)), makevocab=True)
+                 lowerBound=0, upperBound=sepIdx, makevocab=True)
+    write_to_bin(os.path.join(finished_files_dir, "val.bin"),
+                 lowerBound=sepIdx, upperBound=sepIdx+halfOfRest)
+    write_to_bin(os.path.join(finished_files_dir, "test.bin"),
+                 lowerBound=sepIdx+halfOfRest, upperBound=upBound)
 
     # # Chunk the data. This splits each of train.bin, val.bin and test.bin into smaller chunks, each containing e.g. 1000 examples, and saves them in finished_files/chunks
     chunk_all()

@@ -16,12 +16,12 @@ if __name__ == '__main__':
 
     articles, summaries = os.listdir(article_dir), os.listdir(summary_dir)
     for idx, s in enumerate(articles):
-        article_file = os.path.join(article_dir, "article_%s.txt" % str(idx))
-        summary_file = os.path.join(summary_dir, "summary_%s.txt" % str(idx))
+        article_file = os.path.join(article_dir, "article_%05d.txt" % idx)
+        summary_file = os.path.join(summary_dir, "summary_%05d.txt" % idx)
         
         article = open(article_file, 'r').read()
         summary = open(summary_file, 'r').read()
 
-        with open(os.path.join(story_dir, "stories_%s.txt" % str(idx)), "w") as file:
+        with open(os.path.join(story_dir, "stories_%05d.txt" % idx), "w") as file:
             story = article + '\n\n' + '@highlight'+'\n' + summary
             file.write(story)
